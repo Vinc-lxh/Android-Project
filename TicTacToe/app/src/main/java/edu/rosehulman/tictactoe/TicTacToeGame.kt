@@ -62,11 +62,11 @@ fun stringForGameState() = when (state){
         if(state == GameState.X_TURN){
             board[row][column] = Mark.X
             state = GameState.O_TURN
-//            checkForWin()
+            checkForWin()
         }else if(state == GameState.O_TURN){
             board[row][column] = Mark.O
             state = GameState.X_TURN
-//            checkForWin()
+            checkForWin()
         }
     }
     fun checkForWin() {

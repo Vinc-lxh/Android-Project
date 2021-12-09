@@ -4,11 +4,16 @@ plugins {
 }
 
 android {
+    buildFeatures{
+        viewBinding true
+    }
+    //added here binding
+    
     compileSdk 31
 
     defaultConfig {
         applicationId "edu.rosehulman.tictactoe"
-        minSdk 21
+        minSdk 26
         targetSdk 31
         versionCode 1
         versionName "1.0"
