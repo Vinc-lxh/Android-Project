@@ -1,12 +1,13 @@
 package edu.rosehulman.tictactoe
 
 import android.content.Context
+import android.os.Bundle
 import kotlin.random.Random
 
 class LinearLightOut() {
-    var board = IntArray(NUM_COLUMNS){ Random.nextInt(0, 1)}
-    var state = GameState.Initial
-    var trails = 0
+    public var board = IntArray(NUM_COLUMNS){ Random.nextInt(0, 2)}
+    public var state = GameState.Initial
+    public var trails = 0
     lateinit var context: Context
 
     constructor(context:Context):this(){
@@ -15,7 +16,7 @@ class LinearLightOut() {
 
     fun reset(){
         trails = 0
-        board = IntArray(NUM_COLUMNS){ Random.nextInt(0, 1)}
+        board = IntArray(NUM_COLUMNS){ Random.nextInt(0, 2)}
         state = GameState.Initial
     }
 
@@ -44,16 +45,17 @@ fun stringForGameState() = when (state){
         }else if(state == GameState.GameEnd){
             return
         }
+        trails++
         if(column==0){
             board[0] = if (board[column]==1) 0 else 1
-            board[1] = if (board[column]==1) 0 else 1
+            board[1] = if (board[1]==1) 0 else 1
         }else if(column==NUM_COLUMNS-1){
             board[NUM_COLUMNS-1] = if (board[column]==1) 0 else 1
-            board[NUM_COLUMNS-2] = if (board[column]==1) 0 else 1
+            board[NUM_COLUMNS-2] = if (board[column-1]==1) 0 else 1
         }else{
-            board[column-1] = if (board[column]==1) 0 else 1
+            board[column-1] = if (board[column-1]==1) 0 else 1
             board[column] = if (board[column]==1) 0 else 1
-            board[column+1] = if (board[column]==1) 0 else 1
+            board[column+1] = if (board[column+1]==1) 0 else 1
         }
         checkForWin()
 
@@ -75,6 +77,11 @@ fun stringForGameState() = when (state){
         return true
     }
 
+    fun populateBundle(outState: Bundle) {
+        outState?.putInt("trailNum",trails)
+        outState?.putSerializable("gameState",state)
+        outState?.putIntArray("lights",board)
+    }
 
 
     enum class GameState{

@@ -38,6 +38,16 @@
             <Button android:id="@+id/button06"
                 style="@style/tttButton"
                 />
+            <Button
+                android:id="@+id/new_game_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/table_layout"
+                style = "@style/tttButton"
+                android:textSize="20sp"
+                android:text="@string/new_game"
+                android:layout_alignRight="@id/table_layout"
+                />
         </TableRow>
 
     </TableLayout>
@@ -53,16 +63,7 @@
         android:layout_height="wrap_content"
         android:text="Make the button matches" />
 
-    <Button
-        android:id="@+id/new_game_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/table_layout"
-        style = "@style/tttButton"
-        android:textSize="20sp"
-        android:text="@string/new_game"
-        android:layout_alignRight="@id/table_layout"
-        />
+
 
     <Button
         android:id="@+id/email_button"
