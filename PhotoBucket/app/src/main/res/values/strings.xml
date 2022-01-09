@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">PhotoBucket</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="user">user</string>
+    <string name="Profile">Profile</string>
+    <string name="your_profile">Your Profile</string>
+    <string name="bilbo_baggins">CPE/CS_major</string>
+    <string name="user_icon_description">user_icon_description</string>
+    <string name="_111_years_old">21_years_old</string>
+    <string name="photos">Photos</string>
+    <string name="xingheng_lin">Xingheng Lin</string>
+    <string name="linx2_rose_hulman_edu">linx2@rose-hulman.edu</string>
+    <string name="enter_the_url">Enter the URL</string>
+    <string name="remove">REMOVE</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

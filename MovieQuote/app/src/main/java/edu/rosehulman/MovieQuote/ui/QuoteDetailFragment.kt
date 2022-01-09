@@ -22,14 +22,15 @@ class QuoteDetailFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentQuoteDetailBinding.inflate(inflater,container,false)
         model = ViewModelProvider(requireActivity()).get(MovieQuoteViewModel::class.java)
+        //can't use this in owner
         updateView()
         return binding.root
     }
 
     private fun updateView() {
-        Log.d("MQ", "model ${model.movieQuote} in detail update view")
-        binding.movieTextView.text = model.movieQuote.moive
-        binding.quoteTextView.text = model.movieQuote.quote
+        Log.d("MQ", "model ${model.getCurrentQuote()} in detail update view")
+        binding.movieTextView.text = model.getCurrentQuote().moive
+        binding.quoteTextView.text = model.getCurrentQuote().quote
     }
 
 }

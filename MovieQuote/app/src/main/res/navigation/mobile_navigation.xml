@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_quotes">
 
     <fragment
         android:id="@+id/navigation_home"
@@ -13,9 +13,17 @@
 
     <fragment
         android:id="@+id/navigation_quotes"
+        android:name="edu.rosehulman.MovieQuote.ui.QuotesListFragment"
+        android:label="@string/title_quotes"
+        tools:layout="@layout/quotes_list_fragment" />
+
+    <fragment
+        android:id="@+id/navigation_quote_edit"
         android:name="edu.rosehulman.MovieQuote.ui.QuoteEditFragment"
         android:label="@string/title_quotes"
         tools:layout="@layout/fragment_quote_edit" />
+
+
 //new
     <fragment
         android:id="@+id/navigation_quotes_detail"

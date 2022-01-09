@@ -25,7 +25,7 @@ class QuoteEditFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         model = ViewModelProvider(requireActivity()).get(MovieQuoteViewModel::class.java)
-
+            //requireActivity() instead of this
         binding = FragmentQuoteEditBinding.inflate(inflater, container, false)
         setupButtons()
         updateView()
@@ -37,7 +37,9 @@ class QuoteEditFragment : Fragment() {
         binding.doneButton.setOnClickListener{
             val q = binding.quoteTextView.text.toString()
             val m = binding.movieTextView.text.toString()
-            model.movieQuote = MovieQuote(q,m)
+//            model.movieQuote = MovieQuote(q,m)
+            model.updateCurrentQuote(q,m)
+
             updateView()
             findNavController().navigate(R.id.navigation_quotes_detail)
             //TODO: clear button
@@ -45,14 +47,15 @@ class QuoteEditFragment : Fragment() {
         binding.clearButton.setOnClickListener {
             binding.quoteTextView.text.clear()
             binding.movieTextView.setText("")
-            model.movieQuote = MovieQuote()
+            model.updateCurrentQuote("","")
+
             updateView()
 
         }
     }
 
     private fun updateView() {
-        binding.currentQuoteTextView.text = model.movieQuote.toString()
+        binding.currentQuoteTextView.text = model.getCurrentQuote().toString()
 
     }
 
