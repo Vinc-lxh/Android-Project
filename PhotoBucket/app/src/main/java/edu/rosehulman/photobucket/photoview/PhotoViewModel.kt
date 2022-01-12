@@ -1,17 +1,43 @@
-package edu.rosehulman.photobucket.ui.photoview
+package edu.rosehulman.photobucket.photoview
 
 
 import androidx.lifecycle.ViewModel
 import kotlin.random.Random
 
-
-
 class PhotoViewModel:ViewModel() {
+    private var photos = ArrayList<Photo>()
+    var currentPos = 0
 
-    var photo = Photo()
-    fun getCaption() = photo.caption
-    fun getURL() = useGivenOrRandom(photo.URL)
+    fun getPhotoAt(position: Int):Photo{
+        return photos[position]
+    }
 
+    fun getCurrentPhoto() = getPhotoAt(currentPos)
+
+    fun addPhoto(photo: Photo?){
+        val p = photo ?: Photo(useGivenOrRandomCaption(""),useGivenOrRandom(""))
+        photos.add(p)
+    }
+
+    fun updateCurrentPhoto(cap:String, url: String){
+        photos[currentPos].caption = useGivenOrRandomCaption(cap)
+        photos[currentPos].URL = useGivenOrRandom(url)
+    }
+
+    fun removeCurrentPhoto(){
+        photos.removeAt(currentPos)
+        currentPos = 0
+    }
+
+    fun updatePos(pos: Int){
+        currentPos = pos
+    }
+
+    fun toggleCurrentPhoto() {
+        photos[currentPos].isSelected = !photos[currentPos].isSelected
+    }
+
+    fun size() = photos.size
 
     fun useGivenOrRandom(given: String): String {
         if (given.isNotBlank()) {
@@ -21,7 +47,25 @@ class PhotoViewModel:ViewModel() {
         return urls[idx]
     }
 
+    fun useGivenOrRandomCaption(given: String): String {
+        if (given.isNotBlank()) {
+            return given
+        }
+        val idx = Random.nextInt(captions.size)
+        return captions[idx]
+    }
+
     companion object {
+        val captions = arrayListOf(
+            "asfasffasdf",
+            "98ashdfasdf",
+            "asdfnlajfo23",
+            "ojoijoasdf",
+            "238ahfaosdfjo2i3r",
+
+        )
+
+
         val urls = arrayListOf(
             "https://cdn.britannica.com/91/181391-050-1DA18304/cat-toes-paw-number-paws-tiger-tabby.jpg",
             "https://upload.wikimedia.org/wikipedia/commons/b/b1/VAN_CAT.png",
