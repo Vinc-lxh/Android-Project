@@ -1,8 +1,6 @@
 package edu.rosehulman.MovieQuote.models
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.ListenerRegistration
@@ -22,7 +20,7 @@ class MovieQuoteViewModel : ViewModel() {
 
     val ref = Firebase.firestore.collection(MovieQuote.COLLECTION_PATH)
     val subscriptions = HashMap<String,ListenerRegistration>()
-    fun addListener(){
+    fun addListener(observer: () -> Unit) {
         val subscription = ref
             .orderBy(MovieQuote.CREATED_KEY, Query.Direction.ASCENDING)
             .addSnapshotListener{snapshot:QuerySnapshot?,error:FirebaseFirestoreException?->
@@ -34,6 +32,7 @@ class MovieQuoteViewModel : ViewModel() {
             snapshot?.documents?.forEach {
                 movieQuotes.add(MovieQuote.from(it))
             }
+            observer()
         }
 
         //subscriptions[] = subscription

@@ -1,19 +1,14 @@
 package edu.rosehulman.MovieQuote.adapters
 
 import android.graphics.Color
-import android.service.autofill.TextValueSanitizer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.lifecycle.ReportFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.color.MaterialColors
-import com.google.firebase.firestore.QuerySnapshot
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import edu.rosehulman.MovieQuote.R
 import edu.rosehulman.MovieQuote.models.MovieQuote
 import edu.rosehulman.MovieQuote.models.MovieQuoteViewModel
@@ -25,7 +20,9 @@ class MovieQuoteAdapter(val fragment: QuotesListFragment):RecyclerView.Adapter<M
     val model = ViewModelProvider(fragment.requireActivity()).get(MovieQuoteViewModel::class.java)
 
     init{
-        model.addListener()
+        model.addListener{
+            notifyDataSetChanged()
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieQuoteViewHolder {
