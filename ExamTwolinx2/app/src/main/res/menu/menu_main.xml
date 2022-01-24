@@ -1,0 +1,23 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="edu.rosehulman.examtwolinx2.MainActivity">
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/delete_appointment"
+        android:icon="@drawable/ic_baseline_delete_24"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom"
+        android:title="delete" />
+    <item
+        android:id="@+id/shortcut"
+        android:icon="@drawable/ic_baseline_subdirectory_arrow_right_24"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom"
+        android:title="shortcut" />
+
+</menu>

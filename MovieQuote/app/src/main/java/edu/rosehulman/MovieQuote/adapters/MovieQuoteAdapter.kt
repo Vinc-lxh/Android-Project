@@ -10,6 +10,10 @@ import androidx.lifecycle.ReportFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.color.MaterialColors
+import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import edu.rosehulman.MovieQuote.R
 import edu.rosehulman.MovieQuote.models.MovieQuote
 import edu.rosehulman.MovieQuote.models.MovieQuoteViewModel
@@ -20,7 +24,9 @@ class MovieQuoteAdapter(val fragment: QuotesListFragment):RecyclerView.Adapter<M
 
     val model = ViewModelProvider(fragment.requireActivity()).get(MovieQuoteViewModel::class.java)
 
-
+    init{
+        model.addListener()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieQuoteViewHolder {
         val view  = LayoutInflater.from(parent.context).inflate(R.layout.row_quote,parent,false)
@@ -60,9 +66,19 @@ class MovieQuoteAdapter(val fragment: QuotesListFragment):RecyclerView.Adapter<M
             movieTextView.text = movieQuote.moive
             itemView.setBackgroundColor(
                 if(movieQuote.isSelected){
-                    Color.GREEN
+                    //Color.GREEN
+                    MaterialColors.getColor(
+                        fragment.requireContext(),
+                        R.attr.colorAccent,
+                        Color.WHITE
+                    )
                 }else{
-                    Color.WHITE
+                    //Color.WHITE
+                    MaterialColors.getColor(
+                        fragment.requireContext(),
+                        R.attr.colorSurface,
+                        Color.WHITE
+                    )
                 }
             )
         }

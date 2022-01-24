@@ -1,13 +1,32 @@
 package edu.rosehulman.photobucket.photoview
 
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
+import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import kotlin.random.Random
 
 class PhotoViewModel:ViewModel() {
     private var photos = ArrayList<Photo>()
     var currentPos = 0
-
+    val ref = Firebase.firestore.collection(PhotoViewModel.COLLECTION_PATH)
+    fun addListener() {
+        val subscription = ref
+            .addSnapshotListener{ snapshot: QuerySnapshot?, error: FirebaseFirestoreException?->
+                error?.let{
+                    Log.d(Constants.TAG,"Error: $error")
+                    return@addSnapshotListener
+                }
+                photos.clear()
+                snapshot?.documents?.forEach {
+                    photos.add(Photo.from(it))
+                }
+            }
+    }
     fun getPhotoAt(position: Int):Photo{
         return photos[position]
     }
@@ -16,7 +35,8 @@ class PhotoViewModel:ViewModel() {
 
     fun addPhoto(photo: Photo?){
         val p = photo ?: Photo(useGivenOrRandomCaption(""),useGivenOrRandom(""))
-        photos.add(p)
+//        photos.add(p)
+        ref.add(p)
     }
 
     fun updateCurrentPhoto(cap:String, url: String){
@@ -55,7 +75,10 @@ class PhotoViewModel:ViewModel() {
         return captions[idx]
     }
 
+
+
     companion object {
+        val COLLECTION_PATH = "photo"
         val captions = arrayListOf(
             "asfasffasdf",
             "98ashdfasdf",

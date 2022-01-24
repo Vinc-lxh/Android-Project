@@ -14,7 +14,7 @@
         <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.21875" />
         <entry key="app/src/main/res/layout/fragment_quote_detail.xml" value="0.2670579099156564" />
         <entry key="app/src/main/res/layout/fragment_quote_edit.xml" value="0.24954710144927536" />
-        <entry key="app/src/main/res/layout/quotes_list_fragment.xml" value="0.1955800828799788" />
+        <entry key="app/src/main/res/layout/quotes_list_fragment.xml" value="0.1" />
         <entry key="app/src/main/res/layout/row_quote.xml" value="0.24108932455288742" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.2578125" />
       </map>

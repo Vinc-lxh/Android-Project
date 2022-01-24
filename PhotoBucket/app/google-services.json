@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "467992305790",
+    "project_id": "lin-photo-bucket",
+    "storage_bucket": "lin-photo-bucket.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:467992305790:android:e32431a0f22d4d33c6382f",
+        "android_client_info": {
+          "package_name": "edu.rosehulman.photobucket"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "467992305790-074j696875d0mc8mi7oln0e3ua7gjtrj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjzvh0tIObCqEhyzH88eoa-SU_LY3ZqRY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "467992305790-074j696875d0mc8mi7oln0e3ua7gjtrj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

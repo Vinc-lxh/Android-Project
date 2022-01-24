@@ -12,9 +12,7 @@ import edu.rosehulman.MovieQuote.databinding.QuotesListFragmentBinding
 
 class QuotesListFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = QuotesListFragment()
-    }
+
 
     private lateinit var binding:QuotesListFragmentBinding
 
@@ -39,7 +37,10 @@ class QuotesListFragment : Fragment() {
         return binding.root
     }
 
-
+    companion object {
+        fun newInstance() = QuotesListFragment()
+        const val fragmentName = "QuotesListFragment"
+    }
 
 
 }

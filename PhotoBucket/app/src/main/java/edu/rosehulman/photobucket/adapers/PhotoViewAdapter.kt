@@ -19,7 +19,9 @@ import edu.rosehulman.photobucket.ui.PhotoListFragment
 class PhotoViewAdapter(fragment: PhotoListFragment):RecyclerView.Adapter<PhotoViewAdapter.PhotoViewHolder>() {
     val model = ViewModelProvider(fragment.requireActivity()).get(PhotoViewModel::class.java)
     //requireActivity() for fragment, this for in a activity
-
+    init{
+        model.addListener()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.photo_layout,parent,false)

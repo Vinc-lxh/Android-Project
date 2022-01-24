@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "588485427446",
+    "project_id": "lin-movie-quoto",
+    "storage_bucket": "lin-movie-quoto.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:588485427446:android:ab78d623b82fa16338ecd7",
+        "android_client_info": {
+          "package_name": "edu.rosehulman.MovieQuote"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "588485427446-hg5bjjs2n952s098un6gcmvcgi343l4l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFUaCQ17X3qh9oZ_cKruXI8eCgYzbCvWE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "588485427446-hg5bjjs2n952s098un6gcmvcgi343l4l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
