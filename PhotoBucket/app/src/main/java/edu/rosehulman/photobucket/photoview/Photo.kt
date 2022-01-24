@@ -13,6 +13,9 @@ data class Photo(var caption: String = "", var URL: String = "", var isSelected:
     var created: Timestamp? = null
 
     companion object{
+        const val COLLECTION_PATH = "photo"
+        const val CREATED_KEY = "created"
+
         fun from(snapshot: DocumentSnapshot): Photo{
             val mq = snapshot.toObject(Photo::class.java)!!
             mq.id = snapshot.id

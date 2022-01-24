@@ -4,6 +4,7 @@ package edu.rosehulman.photobucket.photoview
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
@@ -13,9 +14,13 @@ import kotlin.random.Random
 class PhotoViewModel:ViewModel() {
     private var photos = ArrayList<Photo>()
     var currentPos = 0
-    val ref = Firebase.firestore.collection(PhotoViewModel.COLLECTION_PATH)
-    fun addListener() {
+    val ref = Firebase.firestore.collection(Photo.COLLECTION_PATH)
+
+    val subscriptions = HashMap<String,ListenerRegistration>()
+    fun addListener(fragmentName: String, observer: () -> Unit) {
+        Log.d(Constants.TAG,"Adding listener for $fragmentName")
         val subscription = ref
+            .orderBy(Photo.CREATED_KEY,Query.Direction.ASCENDING)
             .addSnapshotListener{ snapshot: QuerySnapshot?, error: FirebaseFirestoreException?->
                 error?.let{
                     Log.d(Constants.TAG,"Error: $error")
@@ -25,7 +30,9 @@ class PhotoViewModel:ViewModel() {
                 snapshot?.documents?.forEach {
                     photos.add(Photo.from(it))
                 }
+                observer()
             }
+        subscriptions[fragmentName] = subscription
     }
     fun getPhotoAt(position: Int):Photo{
         return photos[position]
@@ -42,10 +49,11 @@ class PhotoViewModel:ViewModel() {
     fun updateCurrentPhoto(cap:String, url: String){
         photos[currentPos].caption = useGivenOrRandomCaption(cap)
         photos[currentPos].URL = useGivenOrRandom(url)
+        ref.document(getCurrentPhoto().id).set(getCurrentPhoto())
     }
 
     fun removeCurrentPhoto(){
-        photos.removeAt(currentPos)
+        ref.document(getCurrentPhoto().id).delete()
         currentPos = 0
     }
 
@@ -55,6 +63,7 @@ class PhotoViewModel:ViewModel() {
 
     fun toggleCurrentPhoto() {
         photos[currentPos].isSelected = !photos[currentPos].isSelected
+        ref.document(getCurrentPhoto().id).update("selected",true)
     }
 
     fun size() = photos.size
@@ -75,10 +84,14 @@ class PhotoViewModel:ViewModel() {
         return captions[idx]
     }
 
+    fun removeListener(fragmentName: String) {
+        Log.d(Constants.TAG,"removing listener for $fragmentName")
+        subscriptions[fragmentName]?.remove()// this tell firebase to step listening
+        subscriptions.remove(fragmentName)
+    }
 
 
     companion object {
-        val COLLECTION_PATH = "photo"
         val captions = arrayListOf(
             "asfasffasdf",
             "98ashdfasdf",

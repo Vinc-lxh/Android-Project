@@ -15,6 +15,7 @@ class QuotesListFragment : Fragment() {
 
 
     private lateinit var binding:QuotesListFragmentBinding
+    private lateinit var adapter: MovieQuoteAdapter
 
     override fun onCreateView(    //fragment is onCreateView instead of onCreate
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,9 +23,10 @@ class QuotesListFragment : Fragment() {
     ): View {
         binding = QuotesListFragmentBinding.inflate(inflater,container,false)
         //TODO:recycler
-        val adapter = MovieQuoteAdapter(this)
+        adapter = MovieQuoteAdapter(this)
         //set RecycleView and adapter properities
         binding.recyclerView.adapter = adapter
+        adapter.addListener(fragmentName)
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         //Linear to GridLayoutManager
         binding.recyclerView.setHasFixedSize(true)
@@ -35,6 +37,11 @@ class QuotesListFragment : Fragment() {
 
 
         return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        adapter.removeListener(fragmentName)
     }
 
     companion object {

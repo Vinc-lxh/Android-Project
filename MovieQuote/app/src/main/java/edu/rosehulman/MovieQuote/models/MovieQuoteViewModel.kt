@@ -20,7 +20,8 @@ class MovieQuoteViewModel : ViewModel() {
 
     val ref = Firebase.firestore.collection(MovieQuote.COLLECTION_PATH)
     val subscriptions = HashMap<String,ListenerRegistration>()
-    fun addListener(observer: () -> Unit) {
+    fun addListener(fragmentName:String, observer:() -> Unit) {
+        Log.d(Constants.TAG,"Adding listener for $fragmentName")
         val subscription = ref
             .orderBy(MovieQuote.CREATED_KEY, Query.Direction.ASCENDING)
             .addSnapshotListener{snapshot:QuerySnapshot?,error:FirebaseFirestoreException?->
@@ -35,12 +36,14 @@ class MovieQuoteViewModel : ViewModel() {
             observer()
         }
 
-        //subscriptions[] = subscription
+        subscriptions[fragmentName] = subscription
     }
 
-//    fun removeListener(){
-//        subscription.remove()
-//    }
+    fun removeListener(fragmentName: String) {
+        Log.d(Constants.TAG,"removing listener for $fragmentName")
+        subscriptions[fragmentName]?.remove()// this tell firebase to step listening
+        subscriptions.remove(fragmentName)
+    }
     fun addQuote(movieQuote: MovieQuote?) {
         val random = getRandom()
         val newQuote = movieQuote ?: MovieQuote("quote$random", "movie$random")
@@ -68,5 +71,6 @@ class MovieQuoteViewModel : ViewModel() {
     fun getRandom() = Random.nextInt(100)
     fun toggleCurrentQuote() {
         movieQuotes[currentPos].isSelected = !movieQuotes[currentPos].isSelected
+        ref.document(getCurrentQuote().id).update("isSelected",true)
     }
 }

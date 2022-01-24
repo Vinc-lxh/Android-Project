@@ -19,8 +19,11 @@ import edu.rosehulman.photobucket.ui.PhotoListFragment
 class PhotoViewAdapter(fragment: PhotoListFragment):RecyclerView.Adapter<PhotoViewAdapter.PhotoViewHolder>() {
     val model = ViewModelProvider(fragment.requireActivity()).get(PhotoViewModel::class.java)
     //requireActivity() for fragment, this for in a activity
-    init{
-        model.addListener()
+
+    fun addListener(fragmentName: String) {
+        model.addListener(fragmentName){
+            notifyDataSetChanged()
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
@@ -41,6 +44,11 @@ class PhotoViewAdapter(fragment: PhotoListFragment):RecyclerView.Adapter<PhotoVi
         Log.d("PV","Size: ${model.size()}")
         notifyDataSetChanged()
     }
+
+    fun removeListener(fragmentName: String) {
+        model.removeListener(fragmentName)
+    }
+
 
     //define ViewHolder Class
     inner class PhotoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {

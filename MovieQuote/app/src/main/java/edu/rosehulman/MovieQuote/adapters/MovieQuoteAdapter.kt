@@ -19,11 +19,6 @@ class MovieQuoteAdapter(val fragment: QuotesListFragment):RecyclerView.Adapter<M
 
     val model = ViewModelProvider(fragment.requireActivity()).get(MovieQuoteViewModel::class.java)
 
-    init{
-        model.addListener{
-            notifyDataSetChanged()
-        }
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieQuoteViewHolder {
         val view  = LayoutInflater.from(parent.context).inflate(R.layout.row_quote,parent,false)
@@ -38,6 +33,16 @@ class MovieQuoteAdapter(val fragment: QuotesListFragment):RecyclerView.Adapter<M
     fun addQuote(movieQuote: MovieQuote?) {
         model.addQuote(movieQuote)
         notifyDataSetChanged()
+    }
+
+    fun addListener(fragmentName: String) {
+        model.addListener(fragmentName){
+            notifyDataSetChanged()
+        }
+    }
+
+    fun removeListener(fragmentName: String) {
+            model.removeListener(fragmentName)
     }
 
 
