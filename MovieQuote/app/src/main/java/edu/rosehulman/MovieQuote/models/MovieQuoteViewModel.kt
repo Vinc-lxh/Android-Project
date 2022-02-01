@@ -2,10 +2,8 @@ package edu.rosehulman.MovieQuote.models
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.google.firebase.firestore.FirebaseFirestoreException
-import com.google.firebase.firestore.ListenerRegistration
-import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import edu.rosehulman.MovieQuote.Constants
@@ -18,9 +16,11 @@ class MovieQuoteViewModel : ViewModel() {
     fun getQuoteAt(pos:Int) = movieQuotes[pos]
     fun getCurrentQuote() = getQuoteAt(currentPos)
 
-    val ref = Firebase.firestore.collection(MovieQuote.COLLECTION_PATH)
+    lateinit var ref: CollectionReference
     val subscriptions = HashMap<String,ListenerRegistration>()
     fun addListener(fragmentName:String, observer:() -> Unit) {
+        val uid = Firebase.auth.currentUser!!.uid
+        ref = Firebase.firestore.collection(User.COLLECTION_PATH).document(uid).collection(MovieQuote.COLLECTION_PATH)
         Log.d(Constants.TAG,"Adding listener for $fragmentName")
         val subscription = ref
             .orderBy(MovieQuote.CREATED_KEY, Query.Direction.ASCENDING)

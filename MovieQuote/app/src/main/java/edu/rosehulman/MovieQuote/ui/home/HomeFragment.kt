@@ -8,6 +8,8 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import edu.rosehulman.MovieQuote.R
 import edu.rosehulman.MovieQuote.databinding.FragmentHomeBinding
 import edu.rosehulman.MovieQuote.databinding.FragmentQuoteDetailBinding
@@ -36,6 +38,9 @@ class HomeFragment : Fragment() {
 //        homeViewModel.text.observe(viewLifecycleOwner, Observer {
 //            textView.text = it
 //        })
+        binding.logout.setOnClickListener {
+            Firebase.auth.signOut()
+        }
         return binding.root
     }
 
