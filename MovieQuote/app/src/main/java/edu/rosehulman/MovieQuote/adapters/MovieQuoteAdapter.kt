@@ -36,9 +36,9 @@ class MovieQuoteAdapter(val fragment: QuotesListFragment):RecyclerView.Adapter<M
     }
 
     fun addListener(fragmentName: String) {
-        model.addListener(fragmentName){
-            notifyDataSetChanged()
-        }
+//        model.addListener(fragmentName){
+//            notifyDataSetChanged()
+//        }
     }
 
     fun removeListener(fragmentName: String) {

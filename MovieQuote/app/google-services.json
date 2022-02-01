@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "588485427446-7shsn5kpucrt1ti5mgft9km1k5ih4t0i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.rosehulman.MovieQuote",
+            "certificate_hash": "85ff9ede6f24381f033e69c99c1fd4136812b755"
+          }
+        },
+        {
           "client_id": "588485427446-hg5bjjs2n952s098un6gcmvcgi343l4l.apps.googleusercontent.com",
           "client_type": 3
         }

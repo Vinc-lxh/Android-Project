@@ -4,12 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/navigation_quotes">
-
+    <fragment
+        android:id="@+id/navigation_splash"
+        android:name="edu.rosehulman.MovieQuote.ui.SplashFragment"
+        android:label="@string/splash"
+        tools:layout="@layout/fragment_splash" />
+    <fragment
+        android:id="@+id/navigation_user_edit"
+        android:name="edu.rosehulman.MovieQuote.ui.UserEditFragment"
+        tools:layout="@layout/fragment_user_edit" />
     <fragment
         android:id="@+id/navigation_home"
-        android:name="edu.rosehulman.MovieQuote.ui.home.HomeFragment"
+        android:name="edu.rosehulman.MovieQuote.ui.home.UserFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_user" />
 
     <fragment
         android:id="@+id/navigation_quotes"

@@ -13,18 +13,19 @@ class UserViewModel:ViewModel() {
     var user:User? = null
 
     fun getOrMakeUser(observer :()->Unit){
+        ref= Firebase.firestore.collection(User.COLLECTION_PATH).document(Firebase.auth.uid!!)
         if(user!=null){
             //get
             observer()
         }else{
             //make
             ref.get().addOnSuccessListener { snapshot: DocumentSnapshot ->
-                 if(snapshot.exists()){
+                 if(snapshot.exists()){//if exists
                      user = snapshot.toObject(User::class.java)
                  }else{
                      user = User(name = Firebase.auth.currentUser!!.displayName!!)
                      //push the user to the firebase
-                     ref.set(user!!)
+                     ref.set(user!!)//???
                  }
             observer()
             }
@@ -33,13 +34,14 @@ class UserViewModel:ViewModel() {
     }
 
     fun update(newName:String,newAge:Int,newMajor:String,newHasCompletedSetup:Boolean){
+        ref= Firebase.firestore.collection(User.COLLECTION_PATH).document(Firebase.auth.uid!!)
         if(user!=null){
             with(user!!){
                 name = newName
                 age = newAge
                 major = newMajor
                 hasCompletedSetup = newHasCompletedSetup
-                ref.set(this)
+                ref.set(this)///?
             }
 
         }

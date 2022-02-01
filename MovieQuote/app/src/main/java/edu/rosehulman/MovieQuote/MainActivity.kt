@@ -37,13 +37,12 @@ class MainActivity : AppCompatActivity() {
 
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
-
             binding = ActivityMainBinding.inflate(layoutInflater)
             setContentView(binding.root)
 
             initializaAuthListener()
-            val navView: BottomNavigationView = binding.navView
 
+            val navView: BottomNavigationView = binding.navView
             navController = findNavController(R.id.nav_host_fragment_activity_main)
             // Passing each menu ID as a set of Ids because each
             // menu should be considered as top level destinations.
@@ -62,18 +61,25 @@ class MainActivity : AppCompatActivity() {
     private fun initializaAuthListener() {
         authStateListener = FirebaseAuth.AuthStateListener { auth:FirebaseAuth->
             val user = auth.currentUser
-            if(user == null){
-                    setupAuthUI()
+            if(user == null){ //if the user is not currently log in
+                setupAuthUI()
             }else{
                 with(user){
                     Log.d(Constants.TAG,"User: $uid, $email,$displayName,$photoUrl ")
                 }
                 val userModel = ViewModelProvider(this).get(UserViewModel::class.java)
+
                 userModel.getOrMakeUser {
                     if (userModel.hasCompletedSetup()) {
-                        //navController.navigate(R.id.navigation_quotes)
+//                        val id =
+//                            findNavController(R.id.nav_host_fragment_activity_main).currentDestination!!.id
+//                        if (id == R.id.navigation_splash) {
+//                            findNavController(R.id.nav_host_fragment_activity_main)
+//                                .navigate(R.id.navigation_quotes)
+//                        }
+                        navController.navigate(R.id.navigation_quotes)
                     } else {
-                        //navController.navigate(R.id.navigation_user_edit)
+                        navController.navigate(R.id.navigation_user_edit)
                     }
                 }
             }
@@ -90,7 +96,7 @@ class MainActivity : AppCompatActivity() {
         val providers = arrayListOf(
             AuthUI.IdpConfig.EmailBuilder().build(),
             AuthUI.IdpConfig.PhoneBuilder().build(),
-            //AuthUI.IdpConfig.GoogleBuilder().build()
+            AuthUI.IdpConfig.GoogleBuilder().build()
         )
         val signinIntent = AuthUI.getInstance()
             .createSignInIntentBuilder()

@@ -19,4 +19,5 @@
     <string name="bilbo_baggins">Bilbo Baggins</string>
     <string name="_111_years_old">111 years old</string>
     <string name="continueButton">Continue</string>
+    <string name="splash">title_splash</string>
 </resources>

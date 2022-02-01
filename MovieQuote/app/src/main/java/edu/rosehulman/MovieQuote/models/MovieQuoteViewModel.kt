@@ -16,7 +16,8 @@ class MovieQuoteViewModel : ViewModel() {
     fun getQuoteAt(pos:Int) = movieQuotes[pos]
     fun getCurrentQuote() = getQuoteAt(currentPos)
 
-    lateinit var ref: CollectionReference
+    lateinit var ref: CollectionReference //Acitivity onCreate first will create race condition
+
     val subscriptions = HashMap<String,ListenerRegistration>()
     fun addListener(fragmentName:String, observer:() -> Unit) {
         val uid = Firebase.auth.currentUser!!.uid
