@@ -13,8 +13,8 @@
             android:icon="@drawable/ic_baseline_person_24"
             android:title="@string/Profile" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_setting"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_slideshow" />
+            android:title="@string/menu_setting" />
     </group>
 </menu>

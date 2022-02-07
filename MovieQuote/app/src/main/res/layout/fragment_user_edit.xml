@@ -55,7 +55,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/user_edit_major_edit_text"
         android:layout_alignParentStart="true"
-        android:layout_margin="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
         android:text="Upload Photo" />
 
     <Button
@@ -64,8 +67,21 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/user_edit_major_edit_text"
         android:layout_alignParentEnd="true"
-        android:layout_margin="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
         android:text="done" />
+
+
+    <ImageView
+        android:id="@+id/profile_image"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:layout_below="@+id/user_edit_done_button"
+        android:contentDescription="Image"
+        android:layout_centerInParent="true"
+        android:scaleType="centerInside" />
 
 </RelativeLayout>
 

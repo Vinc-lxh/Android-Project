@@ -71,13 +71,12 @@ class MainActivity : AppCompatActivity() {
 
                 userModel.getOrMakeUser {
                     if (userModel.hasCompletedSetup()) {
-//                        val id =
-//                            findNavController(R.id.nav_host_fragment_activity_main).currentDestination!!.id
-//                        if (id == R.id.navigation_splash) {
-//                            findNavController(R.id.nav_host_fragment_activity_main)
-//                                .navigate(R.id.navigation_quotes)
-//                        }
-                        navController.navigate(R.id.navigation_quotes)
+                        val id = findNavController(R.id.nav_host_fragment_activity_main).currentDestination!!.id
+                        if (id == R.id.navigation_splash) {
+                            findNavController(R.id.nav_host_fragment_activity_main)
+                                .navigate(R.id.navigation_quotes)
+                        }
+//                        navController.navigate(R.id.navigation_quotes)
                     } else {
                         navController.navigate(R.id.navigation_user_edit)
                     }

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -22,6 +23,12 @@ class PhotoViewAdapter(fragment: PhotoListFragment):RecyclerView.Adapter<PhotoVi
 
     fun addListener(fragmentName: String) {
         model.addListener(fragmentName){
+            notifyDataSetChanged()
+        }
+    }
+
+    fun addAllListener(fragmentName: String) {
+        model.addAllListener(fragmentName){
             notifyDataSetChanged()
         }
     }
@@ -54,9 +61,17 @@ class PhotoViewAdapter(fragment: PhotoListFragment):RecyclerView.Adapter<PhotoVi
     inner class PhotoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         init {
             itemView.setOnClickListener{
-                //navigate to edit
                 model.updatePos(adapterPosition)//tell what current position
-                itemView.findNavController().navigate(R.id.nav_photos)
+                if(model.checkOwnPhoto()){
+                    itemView.findNavController().navigate(R.id.nav_photos)
+                }
+                else{
+                    Toast.makeText(itemView.context,
+                        "This pic belongs to another user",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    itemView.findNavController().navigate(R.id.nav_photos_detail)
+                }
             }
             itemView.setOnLongClickListener {
                 model.updatePos(adapterPosition)
@@ -69,9 +84,19 @@ class PhotoViewAdapter(fragment: PhotoListFragment):RecyclerView.Adapter<PhotoVi
         val photoCaption:TextView = itemView.findViewById(R.id.smallcaption)
         val photoImage: ImageView = itemView.findViewById(R.id.small_url_image)
         val photoIcon: ImageView = itemView.findViewById(R.id.small_icon)
+        val photoUID: TextView = itemView.findViewById(R.id.userId)
 
         fun bind(photo: Photo) {
-            photoCaption.text = photo.caption.subSequence(0,5)
+            if(photo.caption.length>=5){
+                photoCaption.text = photo.caption.subSequence(0,5)
+            }else{
+                photoCaption.text = photo.caption
+            }
+            if(photo.userID.length>=5){
+                photoUID.text = photo.userID.subSequence(0,5)
+            }else{
+                photoUID.text = photo.userID
+            }
             photoImage.load(photo.URL) {
                 crossfade(true)
                 transformations(RoundedCornersTransformation())

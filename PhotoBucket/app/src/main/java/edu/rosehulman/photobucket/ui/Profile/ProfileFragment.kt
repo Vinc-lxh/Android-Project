@@ -7,6 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import coil.load
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import edu.rosehulman.photobucket.databinding.FragmentProfileBinding
 
 class ProfileFragment : Fragment() {
@@ -27,7 +30,10 @@ class ProfileFragment : Fragment() {
             ViewModelProvider(this).get(ProfileViewModel::class.java)
 
         binding = FragmentProfileBinding.inflate(inflater, container, false)
+        binding.logoutButton.setOnClickListener{
+            Firebase.auth.signOut()
 
+        }
         binding.imageView.load("https://lh3.googleusercontent.com/pw/AM-JKLUva3DS_Y7qPgHJBEuL_sbOPJ3l09NLBcNwgDu5vSDHdYX8ByuhrAGx2UpgUStjEgKuScVnBnFCNsJLzuZyGoevJjTb6bKcb8TxvRS-6wkIT6TmcOwCB1JVk4YZ-Vri2tLo4aGPxy7f0yrI9wx8mV8z=w1178-h1202-no") {
             crossfade(true)
             //transformations(CircleCropTransformation())

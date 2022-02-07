@@ -5,7 +5,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.Exclude
 import com.google.firebase.firestore.ServerTimestamp
 
-data class Photo(var caption: String = "", var URL: String = "", var isSelected: Boolean = false) {
+data class Photo(var caption: String = "", var URL: String = "", var isSelected: Boolean = false,var userID:String = "") {
     @get:Exclude
     var id = ""
 

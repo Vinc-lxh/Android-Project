@@ -4,7 +4,9 @@ data class User(
     var name : String = "",
     var age: Int = -1,
     var major: String = "unkown",
+    var storageUriString: String = "",
     var hasCompletedSetup: Boolean = false
+
 ) {
 
 

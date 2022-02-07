@@ -3,10 +3,8 @@ package edu.rosehulman.photobucket.photoview
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.google.firebase.firestore.FirebaseFirestoreException
-import com.google.firebase.firestore.ListenerRegistration
-import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlin.random.Random
@@ -15,9 +13,45 @@ class PhotoViewModel:ViewModel() {
     private var photos = ArrayList<Photo>()
     var currentPos = 0
     val ref = Firebase.firestore.collection(Photo.COLLECTION_PATH)
-
+    var OwnPhoto = true
     val subscriptions = HashMap<String,ListenerRegistration>()
+    val settintRef = Firebase.firestore.collection("settings").document("settings")
+    var settingString = "Photo"
+    fun addSettingListener(fragmentName: String, observer: () -> Unit){
+        Log.d(Constants.TAG,"Adding listener for $fragmentName")
+        val subscription = settintRef
+            .addSnapshotListener{ snapshot, error: FirebaseFirestoreException?->
+                error?.let{
+                    Log.d(Constants.TAG,"Error: $error")
+                    return@addSnapshotListener
+                }
+                settingString = snapshot?.get("title").toString()
+                Log.d(Constants.TAG,"setting title is for $settingString")
+                observer()
+            }
+        subscriptions[fragmentName] = subscription
+    }
+
     fun addListener(fragmentName: String, observer: () -> Unit) {
+        val uid = Firebase.auth.currentUser?.uid
+        Log.d(Constants.TAG,"Adding listener for $fragmentName")
+        val subscription = ref
+            .orderBy(Photo.CREATED_KEY,Query.Direction.ASCENDING)
+            .whereEqualTo("userID",uid)
+            .addSnapshotListener{ snapshot: QuerySnapshot?, error: FirebaseFirestoreException?->
+                error?.let{
+                    Log.d(Constants.TAG,"Error: $error")
+                    return@addSnapshotListener
+                }
+                photos.clear()
+                snapshot?.documents?.forEach {
+                    photos.add(Photo.from(it))
+                }
+                observer()
+            }
+        subscriptions[fragmentName] = subscription
+    }
+    fun addAllListener(fragmentName: String, observer: () -> Unit) {
         Log.d(Constants.TAG,"Adding listener for $fragmentName")
         val subscription = ref
             .orderBy(Photo.CREATED_KEY,Query.Direction.ASCENDING)
@@ -34,14 +68,30 @@ class PhotoViewModel:ViewModel() {
             }
         subscriptions[fragmentName] = subscription
     }
+
+    fun removeListener(fragmentName: String) {
+        Log.d(Constants.TAG,"removing listener for $fragmentName")
+        subscriptions[fragmentName]?.remove()// this tell firebase to stop listening
+        subscriptions.remove(fragmentName)
+    }
+
     fun getPhotoAt(position: Int):Photo{
         return photos[position]
     }
 
+    fun toggleOwnPhoto(){
+        Log.d(Constants.TAG,"toggled Own photo")
+        OwnPhoto = !OwnPhoto
+    }
+    fun checkOwnPhoto(): Boolean {
+        val uid = Firebase.auth.currentUser!!.uid
+        return (getCurrentPhoto().userID.equals(uid))
+    }
     fun getCurrentPhoto() = getPhotoAt(currentPos)
 
     fun addPhoto(photo: Photo?){
-        val p = photo ?: Photo(useGivenOrRandomCaption(""),useGivenOrRandom(""))
+        val uid = Firebase.auth.currentUser!!.uid
+        val p = photo ?: Photo(useGivenOrRandomCaption(""),useGivenOrRandom(""), userID = uid)
 //        photos.add(p)
         ref.add(p)
     }
@@ -84,11 +134,7 @@ class PhotoViewModel:ViewModel() {
         return captions[idx]
     }
 
-    fun removeListener(fragmentName: String) {
-        Log.d(Constants.TAG,"removing listener for $fragmentName")
-        subscriptions[fragmentName]?.remove()// this tell firebase to step listening
-        subscriptions.remove(fragmentName)
-    }
+
 
 
     companion object {

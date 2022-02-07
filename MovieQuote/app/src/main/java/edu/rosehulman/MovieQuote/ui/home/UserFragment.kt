@@ -6,8 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import coil.load
+import coil.transform.CircleCropTransformation
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import edu.rosehulman.MovieQuote.R
 
 import edu.rosehulman.MovieQuote.databinding.FragmentUserBinding
 import edu.rosehulman.MovieQuote.models.User
@@ -30,10 +34,22 @@ class UserFragment : Fragment() {
         binding.logout.setOnClickListener {
             Firebase.auth.signOut()
         }
+        binding.edit.setOnClickListener{
+            findNavController().navigate(R.id.navigation_user_edit)
+        }
         val userModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
-        binding.age.text = userModel.user?.age.toString()
-        binding.major.text = userModel.user?.major
-        binding.profileName.text = userModel.user?.name
+        with(userModel.user!!){
+            binding.age.text = "age $age"
+            binding.major.text = "major $major"
+            binding.profileName.text = name
+            if(storageUriString.isNotEmpty()){
+                binding.iconImage.load(storageUriString) {
+                    crossfade(true)
+                    transformations(CircleCropTransformation())
+                }
+            }
+        }
+
 
         return binding.root
     }

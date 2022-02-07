@@ -3,8 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../../../layout/custom_preview.xml" value="0.3963541666666667" />
         <entry key="..\:/Android-Project/PhotoBucket/app/src/main/res/layout/activity_main.xml" value="0.5453125" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.19739583333333333" />
         <entry key="app/src/main/res/layout/fragment_gallery.xml" value="0.1" />
@@ -13,6 +14,7 @@
         <entry key="app/src/main/res/layout/fragment_photo_list.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_photos_edit.xml" value="0.3904458870182565" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_setting.xml" value="0.46603260869565216" />
         <entry key="app/src/main/res/layout/fragment_slideshow.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_user.xml" value="0.19739583333333333" />
         <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.1" />

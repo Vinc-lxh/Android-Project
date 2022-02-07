@@ -33,13 +33,14 @@ class UserViewModel:ViewModel() {
 
     }
 
-    fun update(newName:String,newAge:Int,newMajor:String,newHasCompletedSetup:Boolean){
+    fun update(newName:String,newAge:Int,newMajor:String,newStorageUriString:String, newHasCompletedSetup:Boolean){
         ref= Firebase.firestore.collection(User.COLLECTION_PATH).document(Firebase.auth.uid!!)
         if(user!=null){
             with(user!!){
                 name = newName
                 age = newAge
                 major = newMajor
+                storageUriString = newStorageUriString
                 hasCompletedSetup = newHasCompletedSetup
                 ref.set(this)///?
             }
