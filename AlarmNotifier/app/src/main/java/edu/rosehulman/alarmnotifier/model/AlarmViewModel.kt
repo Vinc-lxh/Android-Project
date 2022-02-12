@@ -2,8 +2,15 @@ package edu.rosehulman.alarmnotifier.model
 
 import android.app.AlarmManager
 import android.app.Application
+import android.app.PendingIntent
 import android.content.Context.ALARM_SERVICE
+import android.content.Intent
+import android.os.SystemClock
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import edu.rosehulman.alarmnotifier.Constants
+import edu.rosehulman.alarmnotifier.receivers.AlarmReceiver
+import edu.rosehulman.alarmnotifier.utils.NotificationUtils
 import java.util.*
 
 
@@ -48,31 +55,58 @@ class AlarmViewModel(private val app: Application) : AndroidViewModel(app) {
     fun setAlarmSoon() {
         // TODO
         // you should uncomment and call makePendingIntent too.
+        val selectedInterval = 5 * SECOND_IN_MILLIS
+        val triggerTime = SystemClock.elapsedRealtime() + selectedInterval
+        Log.d(Constants.TAG,"setting")
+        alarmManager.set(
+            AlarmManager.ELAPSED_REALTIME_WAKEUP,
+            triggerTime,
+            makePendingIntent(AlarmType.SOON.toString().lowercase())
+            )
     }
 
-//    private fun makePendingIntent(message: String): PendingIntent {
-//        val notifyIntent = Intent(app, AlarmReceiver::class.java).also {
-//            it.putExtra(NotificationUtils.MESSAGE_KEY, message)
-//        }
-//        return PendingIntent.getBroadcast(
-//            app,
-//            REQUEST_CODE,
-//            notifyIntent,
-//            PendingIntent.FLAG_UPDATE_CURRENT
-//        )
-//    }
+    private fun makePendingIntent(message: String): PendingIntent {
+        val notifyIntent = Intent(app, AlarmReceiver::class.java).also {
+            it.putExtra(NotificationUtils.MESSAGE_KEY, message)
+        }
+        return PendingIntent.getBroadcast(
+            app,
+            REQUEST_CODE,
+            notifyIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+    }
 
     fun setAlarmScheduled() {
-        // TODO. Write this
+        val calendar = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, alarmHour)
+            set(Calendar.MINUTE, alarmMinute)
+        }
+
+        alarmManager.set(
+            AlarmManager.RTC_WAKEUP,
+            calendar.timeInMillis,
+            makePendingIntent(AlarmType.SCHEDULED.toString().lowercase())
+        )
     }
 
     fun setAlarmRecurring() {
-        // This is beyond this lesson. You can try it out if your app requires it.
+        val calendar = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, alarmHour)
+            set(Calendar.MINUTE, alarmMinute)
+        }
+
+        alarmManager.setRepeating(
+            AlarmManager.RTC_WAKEUP,
+            calendar.timeInMillis,
+            calendar.timeInMillis,
+            makePendingIntent(AlarmType.RECURRING.toString().lowercase())
+        )
+
     }
 
     fun cancelAllAlarms() {
-    // TODO Uncomment so you can cancel alarms:
-    //        alarmManager.cancel(makePendingIntent(AlarmType.RECURRING.toString().lowercase()))
+    alarmManager.cancel(makePendingIntent(AlarmType.RECURRING.toString().lowercase()))
     }
 
 }

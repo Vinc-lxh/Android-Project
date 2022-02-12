@@ -11,6 +11,8 @@ import android.view.MenuItem
 import androidx.navigation.NavController
 import edu.rosehulman.alarmnotifier.R
 import edu.rosehulman.alarmnotifier.databinding.ActivityMainBinding
+import edu.rosehulman.alarmnotifier.model.AlarmViewModel
+import edu.rosehulman.alarmnotifier.utils.NotificationUtils
 
 class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -25,6 +27,10 @@ class MainActivity : AppCompatActivity() {
         navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
+
+        if(intent.getStringExtra(NotificationUtils.MESSAGE_KEY) == AlarmViewModel.AlarmType.NOW.toString().lowercase()){
+            navController.navigate(R.id.OtherFragment)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

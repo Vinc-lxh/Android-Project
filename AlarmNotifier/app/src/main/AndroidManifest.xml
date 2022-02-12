@@ -21,6 +21,11 @@
             </intent-filter>
         </activity>
         <!-- TODO: Add receiver here -->
+        <receiver
+            android:name=".receivers.AlarmReceiver"
+            android:enabled="true"
+            android:exported="false">
+        </receiver>
     </application>
 
 </manifest>

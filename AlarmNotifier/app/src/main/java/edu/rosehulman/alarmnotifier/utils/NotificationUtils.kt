@@ -3,7 +3,11 @@ package edu.rosehulman.alarmnotifier.utils
 import android.annotation.SuppressLint
 import android.app.*
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
+import androidx.core.app.NotificationCompat
+import edu.rosehulman.alarmnotifier.R
+import edu.rosehulman.alarmnotifier.ui.MainActivity
 
 object NotificationUtils {
     private const val NOTIFICATION_ID = 1
@@ -44,11 +48,27 @@ object NotificationUtils {
 
         // TODO 4 Create an intent and pending intent and set it in the notification
         // so that it can launch the app.
+        val contentIntent = Intent(context,MainActivity::class.java).also{
+            it.putExtra(MESSAGE_KEY,data)
+        }
 
+        val contentPendingIntent = PendingIntent.getActivity(
+            context,
+            NOTIFICATION_ID,
+            contentIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
 
         // TODO 2 Create a basic notification with at least title, text,
         //  small icon, and high priority. Use the data passed in as part of the text.
+        val builder = NotificationCompat.Builder(context, channelId)
+            .setContentTitle("Wake up!")
+            .setContentText("Your $data alarm is going ")
+            .setSmallIcon(R.drawable.ic_baseline_alarm_24)
+            .setContentIntent(contentPendingIntent)
+            .setAutoCancel(true)
 
+        notificationManager.notify(NOTIFICATION_ID,builder.build())
 
 
         // TODO 3 Actually send the notification
